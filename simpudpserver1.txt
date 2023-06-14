@@ -1,0 +1,54 @@
+Name       - Dhrumil oza
+Roll no    - 26
+Subject    - Advanced Networking
+Assignment - 1
+Course     - mca2
+---------------------------------------------------------------------------------------------
+ -------------------------------------------------------------------------------------
+pg 2> star pattern program implemented using the multithreaded UDP client and server:
+---------------------------------------------------------------------------------------
+import java.net.*;
+
+
+ class mludpserver {
+    public static void main(String[] args) {
+        try {
+            DatagramSocket serverSocket = new DatagramSocket(1234);
+            while (true) {
+                byte[] receiveData = new byte[1024];
+                DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+                serverSocket.receive(receivePacket);
+                UDPThread udpThread = new UDPThread(receivePacket);
+                udpThread.start();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+class UDPThread extends Thread {
+    private DatagramPacket receivePacket;
+
+    public UDPThread(DatagramPacket receivePacket) {
+        this.receivePacket = receivePacket;
+    }
+
+    public void run() {
+        try {
+            String pattern = new String(receivePacket.getData());
+            System.out.println("Received star pattern from client:\n" + pattern);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+-------------------------------------------------------------------------------
+output
+
+Received star pattern from client:
+*****
+****
+***
+**
+*
